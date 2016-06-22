@@ -1,6 +1,7 @@
 # pystl
 Simple STL file class for Python
 
+This is a very simple Python class to programmatically create STL files for 3D printing.
 
 The easiest way to use this is with the context manager. Open the file, write triangles, and exit
 the context block:
