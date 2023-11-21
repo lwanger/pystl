@@ -133,6 +133,7 @@ class PySTL(object):
         """
         self.add_triangle((v1, v2, v4))
         self.add_triangle((v2, v3, v4))
+        self.add_triangle((v1, v3, v4))
 
 
     def length_vector(self, v):
