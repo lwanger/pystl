@@ -72,7 +72,7 @@ class PySTL(object):
     def write_stl_header(self):
         if self.is_bin:
             header_str = ''
-            self.f.write(struct.pack("80s", header_str))
+            self.f.write(struct.pack("80s", header_str.encode()))
             self.write_num_triangles_bin()
         else:
             self.f.write('solid ' + self.model_name + '\n' )
