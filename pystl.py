@@ -72,7 +72,7 @@ class PySTL(object):
     def write_stl_header(self):
         if self.is_bin:
             header_str = ''
-            self.f.write(struct.pack("80s", header_str))
+            self.f.write(struct.pack("80s", header_str.encode()))
             self.write_num_triangles_bin()
         else:
             self.f.write('solid ' + self.model_name + '\n' )
@@ -133,7 +133,27 @@ class PySTL(object):
         """
         self.add_triangle((v1, v2, v4))
         self.add_triangle((v2, v3, v4))
+        self.add_triangle((v1, v3, v4))
 
+    def add_cuboid(stl, x, y, z, w, l, h):
+        """  Write a cuboid at the point (x, y, z) extending in the positive
+             direction with the given width, length and height (w, l, h).
+        :param x: the x coordinate
+        :param y: the y coordinate
+        :param z: the z coordinate
+        :param w: the width in the x-axis
+        :param l: the length in the y-axis
+        :param h: the height in the z-axis
+        """
+        for dz in (z, z+h):
+            # top and bottom faces
+            stl.add_quad((x, y, dz), (x+w, y, dz), (x, y+l, dz), (x+w, y+l, dz))
+        for dx in (x, x+w):
+            # left and right faces
+            stl.add_quad((dx, y, z), (dx, y, z+h), (dx, y+l, z), (dx, y+l, z+h))
+        for dy in (y, y+l):
+            # front and back faces
+            stl.add_quad((x, dy, z), (x, dy, z+h), (x+w, dy, z), (x+w, dy, z+h))
 
     def length_vector(self, v):
         """ Return the length of a vector """
